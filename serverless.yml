@@ -5,7 +5,7 @@
 # uses to deploy your code to your provider of choice
 
 # The `service` block is the name of the service
-service: github-api-proxy
+service: github-api
 
 # The `provider` block defines where your service will be deployed
 provider:
@@ -15,7 +15,7 @@ provider:
 
 # The `functions` block defines what code to deploy
 functions:
-  slack:
+  proxy:
     environment:
       API_TOKEN: ${env:API_TOKEN}
     handler: handler.issues
