@@ -4,7 +4,7 @@ const fetch = require('node-fetch');
 
 module.exports.issues = (event, context, callback) => {
   const reposUrl = 'https://api.github.com/repos/leapdao/';
-  fetch(`${reposUrl}${event.pathParameters.repo}/issues?labels=${event.queryStringParameters.labels}`, {
+  fetch(`${reposUrl}${event.path.repo}/issues?labels=${event.query.labels}`, {
     headers: {
       'Authorization': `token ${process.env.API_TOKEN}`
     }
