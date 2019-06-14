@@ -13,6 +13,45 @@ provider:
   runtime: nodejs8.10
   region: eu-west-1
 
+responseMappings: &response_mappings
+  headers:
+    Content-Type: "'application/json'"
+  statusCodes:
+      200:
+          pattern: ''
+          headers:
+            Access-Control-Allow-Origin: "'*'"
+          template:
+            application/json: ""
+      400:
+          pattern: 'Bad Request: .*'
+          headers:
+            Access-Control-Allow-Origin: "'*'"
+          template:
+            application/json: ""
+      401:
+          pattern: 'Unauthorized: .*'
+          headers:
+            Access-Control-Allow-Origin: "'*'"
+          template:
+            application/json: ""
+      403:
+          pattern: 'Forbidden: .*'
+          headers:
+            Access-Control-Allow-Origin: "'*'"
+          template:
+            application/json: ""
+      404:
+          pattern: 'Not Found: .*'
+          headers:
+            Access-Control-Allow-Origin: "'*'"
+          template:
+            application/json: ""
+      500:
+          pattern: 'Error: .*'
+          headers:
+            Access-Control-Allow-Origin: "'*'"
+
 # The `functions` block defines what code to deploy
 functions:
   proxy:
@@ -21,12 +60,16 @@ functions:
     handler: handler.issues
     # The `events` block defines how to trigger the handler.slack code
     events:
-      - http:
-          path: {repo}/issues
+      - http:          
           method: get
+          path: /{repo}/issues
+          integration: lambda
           cors: true
-          parameters:
-            paths:
-              repo: true
-            querystrings:
-              labels: true
+          request:
+            parameters:
+              paths:
+                repo: true
+              querystrings:
+                labels: true
+            passThrough: WHEN_NO_TEMPLATES
+          response: *response_mappings
