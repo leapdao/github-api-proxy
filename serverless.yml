@@ -70,6 +70,6 @@ functions:
               paths:
                 repo: true
               querystrings:
-                labels: true
+                labels: false
             passThrough: WHEN_NO_TEMPLATES
           response: *response_mappings

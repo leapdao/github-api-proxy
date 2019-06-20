@@ -13,5 +13,5 @@ yarn
 > Use different stage (`-s bla`) to deploy for testing
 
 ```
-API_TOKEN=<github token> npx sls deploy -s prod
+API_TOKEN=<github token> sls deploy -s prod
 ```
